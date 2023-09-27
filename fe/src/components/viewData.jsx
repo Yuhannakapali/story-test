@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 
 
 const ViewData = ()=>{
     const [transction, setTransction]= useState({data:[]});
+    const getData = ()=>{
+        fetch("http://localhost:3000/transaction").then(res=>res.json()).then((data)=>{
+            setTransction(data)
+        })
+    }
+    useEffect(()=>{
+        getData()
+    },[])
     return (
         <>
          <Table>
