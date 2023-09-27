@@ -1,9 +1,47 @@
 const express = require('express')
+const {  stripe } = require('./stripe')
 const app = express()
 const port = 3000
 
+app.disable('x-powered-by');
+
+app.use(function(req, res, next) {
+  // Website you wish to allow to connect
+res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+
+// Request methods you wish to allow
+res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+// Request headers you wish to allow
+res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+// Set to true if you need the website to include cookies in the requests sent
+// to the API (e.g. in case you use sessions)
+res.setHeader('Access-Control-Allow-Credentials', true);
+
+// Pass to next layer of middleware
+next();
+});
+
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
+})
+
+app.get('/transaction', async (req, res) => {
+  const transactions = await stripe.issuing.transactions.list({
+    limit: 3,
+  });
+  res.json({transactions});
+})
+
+app.get('/new/transaction', async (req, res) => {
+  const intent = await stripe.paymentIntents.create({
+    amount:1000,
+    currency: 'usd',
+    payment_method_types: ['card'],
+  });
+  res.json({client_secret: intent.client_secret, intent});
 })
 
 app.listen(port, () => {
