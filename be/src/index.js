@@ -25,12 +25,12 @@ next();
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.json({status: true, message: "Ready to Rock and Roll"})
 })
 
 app.get('/transaction', async (req, res) => {
   const transactions = await stripe.issuing.transactions.list({
-    limit: 3,
+    limit:"3",
   });
   res.json({transactions});
 })

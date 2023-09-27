@@ -1,67 +1,40 @@
+import { useState } from 'react';
 import { Table } from 'reactstrap';
 
+
 const ViewData = ()=>{
+    const [transction, setTransction]= useState({});
     return (
         <Table>
         <thead>
             <tr>
             <th>
-                #
+                Id
             </th>
             <th>
-                First Name
+                Amount
             </th>
             <th>
-                Last Name
-            </th>
-            <th>
-                Username
+                Currency
             </th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <th scope="row">
-                1
-            </th>
-            <td>
-                Mark
-            </td>
-            <td>
-                Otto
-            </td>
-            <td>
-                @mdo
-            </td>
-            </tr>
-            <tr>
-            <th scope="row">
-                2
-            </th>
-            <td>
-                Jacob
-            </td>
-            <td>
-                Thornton
-            </td>
-            <td>
-                @fat
-            </td>
-            </tr>
-            <tr>
-            <th scope="row">
-                3
-            </th>
-            <td>
-                Larry
-            </td>
-            <td>
-                the Bird
-            </td>
-            <td>
-                @twitter
-            </td>
-            </tr>
+            {transction.data?.length === 0 && (<p>No Data To show! </p>)}
+            {transction.data?.length > 0 && transction?.data.map((data)=>
+                <tr key={data.id}>
+                 <th scope="row">
+                    {data.id}
+                    </th>
+                    <td>
+                     {data.amount}
+                    </td>
+                    <td>
+                    {data.currency}
+                    </td>
+                </tr>
+            )
+           }
         </tbody>
     </Table>
     )
