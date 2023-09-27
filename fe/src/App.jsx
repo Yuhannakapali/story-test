@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import './App.css'
-import Navbar from './components/navbar'
-import Header from './components/navbar'
+import Checkout from './components/checkout'
+import Transaction from './components/modal'
+import ViewData from './components/viewData'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <Header/>
-      <h1>main page</h1>
+      <div className="container">
+      <Transaction/>
+      <ViewData/>
+
+      </div>
     </>
   )
 }
